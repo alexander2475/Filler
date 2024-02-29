@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Micro+5&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 html {
-    font-family: "Press Start 2P", system-ui;
+    font-family: "Open Sans", sans-serif;
 }
 
 section#title {
@@ -10,13 +9,13 @@ section#title {
     display: flex;
     justify-content: center;
     align-content: center;
-    font-size: xx-large;
+    font-size: x-large;
 }
 
 .game-area {
     border: 1px solid red;
     display: grid;
-    grid-template-columns: repeat(8,1fr);
+    grid-template-columns: repeat(6,1fr);
     padding: 10px;
 }
 
@@ -24,20 +23,31 @@ section#title {
     border: red 1px solid;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 5px;
-    padding: 30px;
+    gap: 10px;
+    padding: 10px;
 }
 
 .colorTiles {
     background-color: #f0f0f0;
     text-align: center;
-    padding: 30px;
+    padding: 15px;
 }
 
 .tile {
-    background-color: #f0f0f0; /* Example style */
+    background-color: #f0f0f0;
     text-align: center;
     padding: 40px;
 }
+
+.player-names {
+    background-color: #f0f0f0;
+    border: red 1px solid;
+    display: grid;
+    grid-auto-flow: column;
+    text-align: center;
+    gap: 10px;
+    padding: 10px;
+}
+
 
 
