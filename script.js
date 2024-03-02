@@ -36,17 +36,27 @@ document.addEventListener('DOMContentLoaded', function() {
         colorChoice.appendChild(colorOpt);
     }
 
-    for (let i = 1; i <= totalTiles; i++) {
-        const tile = document.createElement('div');
-        tile.className = 'tile';
-        tile.textContent = `Tile ${i}`;
+    let counter = 1;
 
-        if (i === 6){
-            player1SP = tile;
-        } else if (i === 19) {
-            player2SP = tile;
+    for (let row = 0; row < 4; row++){
+        for (let column = 0; column < 6; column++){
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+            //tile.textContent = `Tile ${counter++}\n${row}`+`,${column}`;
+            tile.innerHTML = `Tile ${counter++}<br>${row},${column}`;
+
+            board[row][column] = tile;
+
+            gameArea.appendChild(tile);
+
+            if (row === 0 && column === 5){
+                player1SP = board[row][column];
+            }
+            // Assign player2 to bottom left corner
+            else if (row === 3 && column === 0){
+                player2SP = board[row][column];
+            }
         }
-        gameArea.appendChild(tile);
     }
 
     for (let k = 1; k <= 2; k++) {
@@ -90,11 +100,44 @@ function currentTurn(colorIndex){
 }
 
 //FIXME: this function is not assigning an initial color value to the player titles.
-function setupGame(){
+function setupGame() {
     let tiles = document.getElementsByClassName('tile');
-    for (let i = 0; i < tiles.length; i++) {
-        tiles[i].style.backgroundColor = colors[Math.floor(Math.random() * 6)];
+    let playerNames = document.getElementsByClassName('player-names');
+
+    for (let column = 0; column < 6; column++) {
+        for (let row = 0; row < 4; row++) {
+            board[row][column].style.backgroundColor = colors[Math.floor(Math.random() * 6)];
+            while (isNeighborColorSame(board, row, column)) {
+                board[row][column].style.backgroundColor = colors[Math.floor(Math.random() * 6)];
+            }
+        }
     }
+
+    playerNames[1].style.backgroundColor = board[0][5].style.backgroundColor;
+    playerNames[2].style.backgroundColor = board[3][0].style.backgroundColor;
+}
+
+// I hate everything about this so much
+function isNeighborColorSame(board, row, column) {
+    const currentColor = board[row][column].style.backgroundColor;
+
+    if (row - 1 >= 0 && currentColor === board[row - 1][column].style.backgroundColor) {
+        return true;
+    }
+
+    if (row + 1 < board.length && currentColor === board[row + 1][column].style.backgroundColor) {
+        return true;
+    }
+
+    if (column - 1 >= 0 && currentColor === board[row][column - 1].style.backgroundColor) {
+        return true;
+    }
+
+    if (column + 1 < board[row].length && currentColor === board[row][column + 1].style.backgroundColor) {
+        return true;
+    }
+
+    return false;
 }
 
 document.addEventListener('DOMContentLoaded', setupColorsBar);
