@@ -24,7 +24,6 @@ let player2Name;
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    const totalTiles = 6 * 4;
     const gameArea = document.getElementById('gameArea');
     const colorChoice = document.getElementById('colorOptions');
     const playerArea = document.getElementById("players");
@@ -101,7 +100,6 @@ function currentTurn(colorIndex){
 
 //FIXME: this function is not assigning an initial color value to the player titles.
 function setupGame() {
-    let tiles = document.getElementsByClassName('tile');
     let playerNames = document.getElementsByClassName('player-names');
 
     for (let column = 0; column < 6; column++) {
