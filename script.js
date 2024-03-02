@@ -1,6 +1,19 @@
 
 const colors = ['#FF595E', '#FF924C', '#FFCA3A', '#8AC926', '#1982C4', '#6A4C93'];
 
+let board =
+    [
+        ['x', 'y', 'x', 'x', 'x', 'x',],
+        ['x', 'x', 't', 'x', 'x', 'x',],
+        ['x', 'x', 'x', 'y', 'x', 'x',],
+        ['x', 'x', 'y', 'y', 'x', 'x',]
+    ];
+
+for (let row of board){
+    const rowString = row.join(' ');
+    console.log(rowString);
+}
+
 let turn = true;
 console.log("Is is player1's turn: " + turn);
 
@@ -10,15 +23,16 @@ let player1Name;
 let player2Name;
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    const totalTiles = 6 * 4;
     const gameArea = document.getElementById('gameArea');
-    const totalTiles = 6 * 4; // 8 columns * 7 rows
     const colorChoice = document.getElementById('colorOptions');
     const playerArea = document.getElementById("players");
 
-    for (let j =0; j < colors.length; j++){
+    for (let j = 0; j < colors.length; j++){
         const colorOpt = document.createElement('div');
         colorOpt.className = 'colorTiles';
-        colorOpt.textContent = j;
+        colorOpt.textContent = j.toString();
         colorChoice.appendChild(colorOpt);
     }
 
@@ -32,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (i === 19) {
             player2SP = tile;
         }
-
         gameArea.appendChild(tile);
     }
 
@@ -43,16 +56,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (k === 1){
             player1Name = players;
-        } else {
+        } else if (k === 2) {
             player2Name = players;
         }
-
-
         playerArea.appendChild(players);
     }
 });
 
-function setupColors() {
+//sets up the color bar and adds event listeners to each item.
+function setupColorsBar() {
     let colorTiles = document.getElementsByClassName('colorTiles');
     for (let i = 0; i < colors.length; i++){
         colorTiles[i].style.backgroundColor = colors[i];
@@ -60,15 +72,9 @@ function setupColors() {
     }
 }
 
-function setupClicks(){
-    let tiles = document.getElementsByClassName('tile');
-    for (let i = 0; i < tiles.length; i++){
-        tiles[i].addEventListener('click', function() {});
-    }
-}
-
+//FIXME: this function is not able to update the player title cards.
 function currentTurn(colorIndex){
-    //this.style.opacity = .5;
+    //this.style.opacity = 0.5;
     turn = !turn;
     console.log("Is is player1's turn: " + turn);
 
@@ -83,19 +89,15 @@ function currentTurn(colorIndex){
     }
 }
 
+//FIXME: this function is not assigning an initial color value to the player titles.
 function setupGame(){
     let tiles = document.getElementsByClassName('tile');
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].style.backgroundColor = colors[Math.floor(Math.random() * 6)];
-        if (i === 6) {
-            player1Name = tiles[i].backgroundColor;
-        }
     }
-
 }
 
-document.addEventListener('DOMContentLoaded', setupClicks);
-document.addEventListener('DOMContentLoaded', setupColors);
+document.addEventListener('DOMContentLoaded', setupColorsBar);
 document.addEventListener('DOMContentLoaded', setupGame);
 
 
