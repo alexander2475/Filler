@@ -4,3 +4,7 @@
 - Javascript
 - HTML
 - CSS
+
+### Sites used for dev:
+
+- [Coolors.co](https://coolors.co/)
