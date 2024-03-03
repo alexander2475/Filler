@@ -1,5 +1,5 @@
 
-const colors = ['#FEB202','#633DD7', '#D1383B','#238bf3','#2CA082', '#ED7F01'];
+const colors = ['#ffc13d','#c77dff', '#D1383B','#238bf3','#4f772d', '#003049'];
 
 let board =
     [
@@ -115,10 +115,16 @@ function currentTurn(colorIndex){
     }
 
     if(player1Captured.size + player2Captured.size === boardWidth * boardHeight) {
-        console.log("game over");
+
+
+        if (player1Captured.size > player2Captured.size){
+            playingAgain("Player 1!");
+        } else if (player2Captured.size > player1Captured.size) {
+            playingAgain("Player 2!");
+        } else if (player2Captured.size === player1Captured.size) {
+            playingAgain("It's a draw!")
+        }
     }
-
-
 }
 
 function greyColors(){
@@ -157,7 +163,6 @@ function setupGame() {
     playerNames[1].textContent = "-> Player 1 <-";
     playerNames[1].style.backgroundColor = board[0][5].style.backgroundColor;
     playerNames[2].style.backgroundColor = board[3][0].style.backgroundColor;
-
     greyColors();
 
 }
@@ -269,6 +274,40 @@ function updateNeighbors() {
     }
 }
 
+function playingAgain(winner) {
+    let backdrop = document.createElement('div');
+    backdrop.style.position = 'fixed';
+    backdrop.style.top = '0';
+    backdrop.style.left = '0';
+    backdrop.style.width = '100%';
+    backdrop.style.height = '100%';
+    backdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    backdrop.style.display = 'flex';
+    backdrop.style.justifyContent = 'center';
+    backdrop.style.alignItems = 'center';
+    backdrop.style.zIndex = '1000'; // Ensure it's on top
+
+    // Assuming 'popup' is the div where the content of the popup goes
+    let popup = document.createElement('div');
+    popup.innerHTML = `<h1>Congrats! ${winner}</h1><br><h3>Would you like to play again?</h3><br><button id="yesButton">Yes</button>&nbsp;<button id="noButton">No</button>`;
+    popup.style.padding = '20px';
+    popup.style.backgroundColor = 'white';
+    popup.style.borderRadius = '5px';
+    popup.style.textAlign = 'center';
+    popup.style.color = 'black';
+
+    backdrop.appendChild(popup);
+
+    document.body.appendChild(backdrop);
+
+    document.getElementById('yesButton').addEventListener('click', function() {
+        window.location.reload();
+    });
+
+    document.getElementById('noButton').addEventListener('click', function() {
+        document.body.removeChild(backdrop);
+    });
+}
 
 document.addEventListener('DOMContentLoaded', setupColorsBar);
 document.addEventListener('DOMContentLoaded', setupGame);
