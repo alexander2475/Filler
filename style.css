@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Madimi+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 html {
     font-family: "Madimi One", sans-serif;
     min-width: 690px;
@@ -25,6 +26,18 @@ a {
     text-decoration: none;
 }
 
+.multiplayer {
+    text-align: center;
+    color: black;
+    background-color: #ffffff;
+    box-shadow: 0 2px 15px  rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+.multiplayer h3 {
+    padding: 10px;
+}
+
 .game-area {
     /*border: 1px solid red;*/
     display: grid;
@@ -33,6 +46,16 @@ a {
     background-color: white;
     box-shadow: 0 2px 15px  rgba(0,0,0,0.1);
     border-radius: 5px;
+}
+
+.player-names {
+    /*border: 1px solid red;*/
+    display: grid;
+    grid-auto-flow: column;
+    text-align: center;
+    gap: 10px;
+    padding: 20px;
+    font-size: larger;
 }
 
 .color-grid {
@@ -53,18 +76,7 @@ a {
     background-color: #f0f0f0;
     text-align: center;
     padding: 40px;
-}
-
-.player-names {
-    /*border: 1px solid red;*/
-    display: grid;
-    grid-auto-flow: column;
-    text-align: center;
-    gap: 10px;
-    padding: 20px;
-    font-size: larger;
-}
-/* End of index.html style */
+}  /* End of index.html style */
 
 
 
