@@ -308,9 +308,5 @@ function playingAgain(winner) {
     });
 }
 
-function generateCode() {
-    //code goes here
-}
-
 document.addEventListener('DOMContentLoaded', setupColorsBar);
 document.addEventListener('DOMContentLoaded', setupGame);
