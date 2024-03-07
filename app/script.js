@@ -30,6 +30,9 @@ let player2Name;
 
 document.addEventListener('DOMContentLoaded', function() {
 
+    //This needs to be moved to the updating part
+    socketSetup();
+
     //gets elements from html
     const gameArea = document.getElementById('gameArea');
     const colorChoice = document.getElementById('colorOptions');
@@ -306,6 +309,35 @@ function playingAgain(winner) {
     document.getElementById('noButton').addEventListener('click', function() {
         document.body.removeChild(backdrop);
     });
+}
+
+//TODO: this needs work.
+function socketSetup(){
+    const socket = io('http://localhost:8080');
+
+    socket.on('message', (text) => {
+        const test = document.createElement('l1');
+        test.innerHTML = text;
+        document.querySelector('ul').appendChild(test);
+    });
+
+    socket.on('connect', () => {
+        console.log(socket.connected);
+    });
+
+    socket.on('disconnect', () => {
+        console.log("Disconnected...")
+    })
+
+    socket.on('connect_error', (error) => {
+        console.log('Connection Error:', error);
+    });
+
+    socket.on('reconnect_attempt', (attempt) => {
+        console.log("Attempting to reconnect...");
+    });
+
+    socket.on('changeMade')
 }
 
 document.addEventListener('DOMContentLoaded', setupColorsBar);
