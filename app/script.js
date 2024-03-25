@@ -12,6 +12,9 @@ let board =
 const boardWidth = 6;
 const boardHeight = 4;
 
+//adding this for socketSetup()
+const socket = io('http://localhost:8080');
+
 let mainBoard =
     [
         ['x', 'x', 'x', 'x', 'x', '1',],
@@ -29,9 +32,6 @@ let player1Name;
 let player2Name;
 
 document.addEventListener('DOMContentLoaded', function() {
-
-    //This needs to be moved to the updating part
-    socketSetup();
 
     //gets elements from html
     const gameArea = document.getElementById('gameArea');
@@ -119,7 +119,6 @@ function currentTurn(colorIndex){
 
     if(player1Captured.size + player2Captured.size === boardWidth * boardHeight) {
 
-
         if (player1Captured.size > player2Captured.size){
             playingAgain("Player 1!");
         } else if (player2Captured.size > player1Captured.size) {
@@ -168,6 +167,8 @@ function setupGame() {
     playerNames[2].style.backgroundColor = board[3][0].style.backgroundColor;
     greyColors();
 
+    //Sets up the socket for the game.
+    socketSetup();
 }
 
 // I hate everything about this so much
@@ -209,6 +210,9 @@ function updateBoard(turn) {
         });
     }
     updateNeighbors();
+
+    //adding emit event here for visibility
+    updateGame('room_1');
 }
 
 function updateNeighbors() {
@@ -274,6 +278,7 @@ function updateNeighbors() {
                 }
             }
         }
+        //TODO: could call update function here to share the board?
     }
 }
 
@@ -313,31 +318,23 @@ function playingAgain(winner) {
 
 //TODO: this needs work.
 function socketSetup(){
-    const socket = io('http://localhost:8080');
-
-    socket.on('message', (text) => {
-        const test = document.createElement('l1');
-        test.innerHTML = text;
-        document.querySelector('ul').appendChild(test);
-    });
 
     socket.on('connect', () => {
-        console.log(socket.connected);
+        console.log("connected: " + socket.connected);
+        socket.emit('create', 'room1', 'playerUserName', mainBoard);
     });
 
-    socket.on('disconnect', () => {
-        console.log("Disconnected...")
-    })
-
-    socket.on('connect_error', (error) => {
-        console.log('Connection Error:', error);
+    socket.on('boardUpdate', (board) => {
+        mainBoard = board;
+        console.log("boards updated with val\n");
+        console.log(board);
     });
+}
 
-    socket.on('reconnect_attempt', (attempt) => {
-        console.log("Attempting to reconnect...");
-    });
-
-    socket.on('changeMade')
+//This probably does not need to be a function.
+function updateGame(room) {
+    // Assuming `room` is a variable that holds the current room's identifier
+    socket.emit('move', mainBoard, room);
 }
 
 document.addEventListener('DOMContentLoaded', setupColorsBar);

@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Madimi+One&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 html {
-    font-family: "Madimi One", sans-serif;
-    /*font-family: "Nunito", sans-serif;*/
+    /*font-family: "Madimi One", sans-serif;*/
+    font-family: "Nunito", sans-serif;
     min-width: 690px;
     color: white;
     background-color: #e1e1e1;
@@ -30,6 +30,7 @@ a {
 }
 
 .multiplayer {
+    padding-top: 15px;
     display: grid;
     grid-auto-flow: column;
     text-align: center;
